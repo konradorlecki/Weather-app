@@ -1,0 +1,17 @@
+import { createAction, props } from '@ngrx/store';
+import { WeatherInterface } from '../../models/weatherInterface';
+
+export const getCityByName = createAction(
+  'getCityByName',
+  props<{ cityName: string }>()
+);
+
+export const successGetCityByName = createAction(
+  'successGetCityByName',
+  props<{ weather: WeatherInterface }>()
+);
+
+export const getCitiesById = createAction(
+  'getCitiesById',
+  props<{ citiesId: string[] }>()
+);
