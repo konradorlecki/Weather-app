@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Action, Store } from '@ngrx/store';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { AppState } from '../states/app.state';
-import { Observable, of } from 'rxjs';
-import { WeatherActions } from '../actions';
-import { exhaustMap, switchMap } from 'rxjs/operators';
-import { WeatherService } from '../../services/weather.service';
 
+import { Action } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { exhaustMap, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
+import { WeatherActions } from '../actions';
+import { WeatherService } from '../../services/weather.service';
 
 @Injectable()
 export class WeatherEffects {
   constructor(
-    private store: Store<AppState>,
     private actions$: Actions,
     private weatherService: WeatherService,
   ) { }

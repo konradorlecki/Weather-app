@@ -15,6 +15,10 @@ export class WeatherService {
   ) { }
 
   getCityByName(cityName: string): Observable<WeatherInterface> {
-    return this.http.get<WeatherInterface>(`${API.WEATHER.DEFAULT}q=${cityName}&appid=${environment.weatherApiKey}`);
+    return this.http.get<WeatherInterface>(`${API.WEATHER.DEFAULT}${API.WEATHER.PARTS.WEATHER}q=${cityName}&appid=${environment.weatherApiKey}`);
+  }
+
+  getCitiesById(citiesId: string[]): Observable<WeatherInterface[]> {
+    return this.http.get<WeatherInterface[]>(`${API.WEATHER.DEFAULT}${API.WEATHER.PARTS.GROUP}id=${[...citiesId]}&appid=${environment.weatherApiKey}`);
   }
 }
