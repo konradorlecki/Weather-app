@@ -5,4 +5,3 @@ import { weatherReducer } from './weather.reducer';
 export const reducers: ActionReducerMap<AppState> = {
   weatherData: weatherReducer
 };
-
