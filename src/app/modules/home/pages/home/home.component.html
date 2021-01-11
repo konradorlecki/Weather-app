@@ -1,1 +1,14 @@
-<>
+<div class="page-wrapper">
+  <div class="">
+    <h1 class="mat-h1">Weather app</h1>
+    <mat-form-field appearance="standard">
+      <mat-label>Enter your city</mat-label>
+      <input matInput #cityInput type="text" (keyup.enter)="onAddCity()" [formControl]="cityInputFormControl">
+      <mat-error *ngIf="cityInputFormControl.hasError('minlength')">City name should contain at least 3 characters</mat-error>
+    </mat-form-field>
+    <button mat-button (click)="onAddCity()">Add city</button>
+  </div>
+  <div>
+
+  </div>
+</div>
