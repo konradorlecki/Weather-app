@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+@import "colors";
+$custom-typography: mat-typography-config(
+  $font-family: "Montserrat",
+  $headline: mat-typography-level(32px, 48px, 500),
+  $title: mat-typography-level(24px, 36px, 500),
+  $subheading-2: mat-typography-level(18px, 24px, 500),
+  $subheading-1: mat-typography-level(13px, 22px, 500),
+  $caption: mat-typography-level(15px, 20px, 500)
+);
+
+@include mat-core($custom-typography);

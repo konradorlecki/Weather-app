@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,8 +23,11 @@ import { effects } from './store/effects';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
     HttpClientModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { verticalPosition: 'top', panelClass: 'error-snackbar' } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

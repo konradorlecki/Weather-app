@@ -1,14 +1,23 @@
 <div class="page-wrapper">
-  <div class="">
-    <h1 class="mat-h1">Weather app</h1>
-    <mat-form-field appearance="standard">
-      <mat-label>Enter your city</mat-label>
-      <input matInput #cityInput type="text" (keyup.enter)="onAddCity()" [formControl]="cityInputFormControl">
-      <mat-error *ngIf="cityInputFormControl.hasError('minlength')">City name should contain at least 3 characters</mat-error>
-    </mat-form-field>
-    <button mat-button (click)="onAddCity()">Add city</button>
-  </div>
-  <div>
-
+  <div class="weather-background">
+    <div class="title-section">
+      <h1 class="mat-h1 title">Weather app</h1>
+      <mat-form-field appearance="standard" class="city-form-field">
+        <mat-label>Enter your city</mat-label>
+        <input matInput #cityInput type="text" (keyup.enter)="onAddCity()" [formControl]="cityInputFormControl">
+      </mat-form-field>
+      <button mat-button (click)="onAddCity()" class="add-city-button">Add City</button>
+    </div>
+    <div class="scrollbar">
+      <div *ngFor="let cityWeather of citiesWeather" class="table-item">
+        <p class="city-name">{{ cityWeather.name }}</p>
+        <p class="city-temp">{{ cityWeather.main.temp.toFixed() }} °C</p>
+        <div class="weather-image-wrapper">
+          <img src="http://openweathermap.org/img/wn/{{ cityWeather.weather[0].icon }}@2x.png" class="weather-image">
+        </div>
+        <p class="weather-description">{{ cityWeather.weather[0].description | titlecase }}</p>
+        <button mat-button class="delete-button" (click)="onDeleteCity(cityWeather.id)">Delete</button>
+      </div>
+    </div>
   </div>
 </div>

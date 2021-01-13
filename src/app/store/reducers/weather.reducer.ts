@@ -16,6 +16,22 @@ const reducer = createReducer(
       ...state,
       weather: updatedWeather
     };
+  }),
+  on(WeatherActions.successGetCitiesById, (state, { weather }) => {
+    return {
+      ...state,
+      weather
+    }
+  }),
+  on(WeatherActions.deleteCityWeather, (state, { weatherId }) => {
+    const deleteCityWeatherIndex = state.weather.findIndex(weather => weather.id === weatherId);
+    const newWeather = [...state.weather];
+    newWeather.splice(deleteCityWeatherIndex, 1);
+
+    return {
+      ...state,
+      weather: newWeather
+    }
   })
 );
 
