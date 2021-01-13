@@ -25,4 +25,12 @@ export interface WeatherInterface {
   };
   id: number;
   name: string;
+  timezone: number;
+  base: string;
+  cod: number;
+}
+
+export interface MultipleWeatherResponse {
+  cnt: number;
+  list: WeatherInterface[];
 }
