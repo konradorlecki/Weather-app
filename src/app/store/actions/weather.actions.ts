@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+
 import { WeatherInterface } from '../../models/weatherInterface';
 
 export const getCityByName = createAction(

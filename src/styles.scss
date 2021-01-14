@@ -10,17 +10,14 @@ body {
 }
 
 .mat-focused .mat-form-field-label {
-  /*change color of label*/
   color: $primary-blue !important;
 }
 
 .mat-form-field-underline {
-  /*change color of underline*/
   background-color: $primary-blue !important;
 }
 
 .mat-form-field-ripple {
-  /*change color of underline when focused*/
   background-color: $primary-blue !important;
 }
 
