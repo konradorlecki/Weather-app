@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+
 import { WeatherState } from '../states/weather.state';
 import { WeatherActions } from '../actions';
 

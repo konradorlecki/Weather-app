@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { MapsAPILoader } from '@agm/core';
 import { select, Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AppState } from '../../../../store/states/app.state';
 import { WeatherActions } from '../../../../store/actions';
-import { FormControl } from '@angular/forms';
 import { WeatherInterface } from '../../../../models/weatherInterface';
 import { selectCitiesWeather } from '../../../../store/selectors/weather.selectors';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -31,9 +31,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     const cityIds = JSON.parse(localStorage.getItem('cityIds') as string);
+
     if (cityIds?.length) {
       this.store.dispatch(WeatherActions.getCitiesById({ citiesId: cityIds }))
     }
+
     this.store.pipe(select(selectCitiesWeather))
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe((citiesWeather: WeatherInterface[]) => {

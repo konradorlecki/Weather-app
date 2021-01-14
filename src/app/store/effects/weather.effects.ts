@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { Action, select, Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { WeatherActions } from '../actions';
 import { WeatherService } from '../../services/weather.service';
 import { AppState } from '../states/app.state';
 import { selectCitiesWeather } from '../selectors/weather.selectors';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class WeatherEffects {
@@ -25,29 +25,33 @@ export class WeatherEffects {
     this.actions$.pipe(
       ofType(WeatherActions.getCityByName),
       withLatestFrom(
-        of(localStorage.getItem('cityIds')),
         this.store.pipe(select(selectCitiesWeather))
       ),
-      exhaustMap(([action, cityIds, citiesWeather]) => {
+      exhaustMap(([action, citiesWeather]) => {
         return this.weatherService.getCityByName(action.cityName).pipe(
-          switchMap(res => {
+          map(res => {
+            const cityIds = localStorage.getItem('cityIds')
             let cityDuplicateError = false;
+
             citiesWeather.map(cityWeather => {
               if (cityWeather.id === res.id) {
                 cityDuplicateError = true;
               }
             })
+
             if (cityDuplicateError) {
-              return of(WeatherActions.cityDuplicateError())
+              return WeatherActions.cityDuplicateError()
             }
+
             if (cityIds) {
               localStorage.setItem('cityIds', JSON.stringify([...JSON.parse(cityIds), res.id]));
             } else {
               localStorage.setItem('cityIds', JSON.stringify([res.id]));
             }
-            return of(WeatherActions.successGetCityByName({ weather: res }));
+
+            return WeatherActions.successGetCityByName({ weather: res });
           }),
-          catchError((error) => {
+          catchError(() => {
             return of(WeatherActions.notFoundCityError());
           })
         );
@@ -60,8 +64,8 @@ export class WeatherEffects {
       ofType(WeatherActions.getCitiesById),
       exhaustMap(action => {
         return this.weatherService.getCitiesById(action.citiesId).pipe(
-          switchMap(res => {
-            return of(WeatherActions.successGetCitiesById({ weather: res.list }));
+          map(res => {
+            return WeatherActions.successGetCitiesById({ weather: res.list });
           })
         );
       })
